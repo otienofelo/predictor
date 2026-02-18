@@ -1,3 +1,5 @@
+import diseaseRules from './diseaseRules'
+
 export const runDiagnosis = (species, selectedSymptoms) => {
   const diseases = diseaseRules[species] || []
 
@@ -5,9 +7,7 @@ export const runDiagnosis = (species, selectedSymptoms) => {
 
   const results = diseases.map(disease => {
     const normalizedDiseaseSymptoms = disease.symptoms.map(s => s.toLowerCase().trim())
-    const matchedSymptoms = normalizedDiseaseSymptoms.filter(s =>
-      normalizedSelected.includes(s)
-    )
+    const matchedSymptoms = normalizedDiseaseSymptoms.filter(s => normalizedSelected.includes(s))
     const matchCount = matchedSymptoms.length
     const confidence = disease.symptoms.length > 0
       ? Math.round((matchCount / disease.symptoms.length) * 100)
