@@ -11,7 +11,7 @@ const PredictionResult = ({ results, animal, onNew }) => {
     if (!animal) return
 
     const visit = {
-      id: Date.now().toString(), // temporary ID
+      id: Date.now().toString(),
       animalId: animal.id,
       animalName: animal.tag || animal.name,
       date: new Date().toISOString(),

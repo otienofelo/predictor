@@ -1,4 +1,3 @@
-// frontend/src/features/farmers/FarmerDetail.jsx
 import { useParams, Link } from 'react-router-dom'
 import { useAppContext } from '../../context/AppContext'
 

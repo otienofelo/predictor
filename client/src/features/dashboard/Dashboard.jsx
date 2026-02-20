@@ -1,4 +1,3 @@
-// frontend/src/features/dashboard/Dashboard.jsx
 import React from 'react'
 import { useAppContext } from '../../context/AppContext'
 import Navbar from '../../components/layout/Navbar'
@@ -22,7 +21,6 @@ const Dashboard = () => {
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 5)
 
-  // Placeholder percentage changes 
   const statsChange = { farmers: 0, animals: 0, sick: 0, visits: 0 }
 
   return (

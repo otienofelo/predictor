@@ -79,7 +79,7 @@ const handleDelete = (id) => {
           <option value="sick">Sick</option>
           <option value="treatment">Under Treatment</option>
         </select>
-        <div /> {/* placeholder */}
+        <div /> 
       </div>
 
       {/* Table */}

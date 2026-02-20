@@ -1,4 +1,3 @@
-// frontend/src/features/dashboard/RecentVisits.jsx
 import { Link } from 'react-router-dom'
 import { Calendar, Eye } from 'lucide-react'
 

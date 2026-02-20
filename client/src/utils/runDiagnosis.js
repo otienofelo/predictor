@@ -1,7 +1,6 @@
-import diseaseRules from './diseaseRules'
-
-export const runDiagnosis = (species, selectedSymptoms) => {
-  const diseases = diseaseRules[species] || []
+// frontend/src/utils/runDiagnosis.js
+export const runDiagnosis = (diseases, selectedSymptoms) => {
+  if (!diseases || diseases.length === 0) return []
 
   const normalizedSelected = selectedSymptoms.map(s => s.toLowerCase().trim())
 
@@ -15,8 +14,8 @@ export const runDiagnosis = (species, selectedSymptoms) => {
 
     return {
       ...disease,
-      matchCount,
       matchedSymptoms,
+      matchCount,
       confidence
     }
   })

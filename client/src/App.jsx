@@ -19,9 +19,11 @@ import SymptomChecker from "./features/diagnosis/SymptomChecker";
 
 // Health Records
 import VisitHistory from "./features/health-records/VisitHistory";
-import visitDetail from "./features/health-records/VisitDetail";
+import VisitDetail from "./features/health-records/VisitDetail";
+
 // Disease Library
 import DiseaseList from "./features/disease-library/DiseaseList";
+import DiseaseForm from "./features/disease-library/DiseaseForm";
 
 const AppRoutes = () => {
   return (
@@ -46,23 +48,24 @@ const AppRoutes = () => {
         <Route path="new" element={<AnimalForm />} />
       </Route>
 
-      {/* Diagnosis / Symptom Checker */}
+      {/* Diagnosis */}
       <Route path="diagnosis">
         <Route index element={<SymptomChecker />} />
         <Route path="results" element={<SymptomChecker />} />
-        <Route path="diagnosis" element={<SymptomChecker />} />
       </Route>
+
       {/* Health Records */}
       <Route path="records">
         <Route index element={<VisitHistory />} />
         <Route path=":animalId" element={<VisitHistory />} />
-       <Route path=":id" element={<visitDetail />} />
+        <Route path=":id" element={<VisitDetail />} />
       </Route>
 
       {/* Disease Library */}
       <Route path="diseases">
         <Route index element={<DiseaseList />} />
-        <Route path="new" element={<DiseaseList />} />
+        <Route path="new" element={<DiseaseForm />} />
+        <Route path=":id/edit" element={<DiseaseForm />} />
       </Route>
 
       {/* Catch-all */}

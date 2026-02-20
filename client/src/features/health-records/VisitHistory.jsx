@@ -11,7 +11,7 @@ const VisitHistory = () => {
   const [animalFilter, setAnimalFilter] = useState('all')
   const [dateFilter, setDateFilter] = useState('')
 
-  // 🔍 Filter logic
+  //  Filter logic for visits based on search, animal, and date
   const filteredVisits = visits.filter((visit) => {
     const animal = animals.find(a => a.id === visit.animalId)
     const animalName = animal?.tag || animal?.name || 'Unknown'

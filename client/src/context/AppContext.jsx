@@ -1,4 +1,5 @@
-import React, { createContext, useReducer, useContext } from "react";
+import React, { createContext,useContext } from "react";
+import { useEffect, useReducer } from 'react'
 
 // Actions
 export const ACTIONS = {
@@ -18,8 +19,12 @@ export const ACTIONS = {
   ADD_VISIT: 'ADD_VISIT',
   UPDATE_VISIT: 'UPDATE_VISIT',
   DELETE_VISIT: 'DELETE_VISIT',
-  SET_CURRENT_VISIT: 'SET_CURRENT_VISIT'
-  
+  SET_CURRENT_VISIT: 'SET_CURRENT_VISIT',
+  // Disease Library
+    SET_DISEASES: 'SET_DISEASES',
+  ADD_DISEASE: 'ADD_DISEASE',
+  UPDATE_DISEASE: 'UPDATE_DISEASE',
+  DELETE_DISEASE: 'DELETE_DISEASE',
 };
 
 
@@ -33,6 +38,7 @@ const initialState = {
   currentAnimal: null, 
   currentVisit: null,
   visits: [],
+  diseases: [],
 };
 
 // Reducer
@@ -92,18 +98,42 @@ case ACTIONS.DELETE_VISIT:
   return {
     ...state,
     visits: state.visits.filter(v => v.id !== action.payload)
-  }
 
+  }
+// Disease Library
 case ACTIONS.SET_CURRENT_VISIT:
   return { ...state, currentVisit: action.payload }
+  case ACTIONS.SET_DISEASES:
+  return { ...state, diseases: action.payload }
+case ACTIONS.ADD_DISEASE:
+  return { ...state, diseases: [...state.diseases, action.payload] }
+case ACTIONS.UPDATE_DISEASE:
+  return {
+    ...state,
+    diseases: state.diseases.map(d => d.id === action.payload.id ? action.payload : d)
+  }
+case ACTIONS.DELETE_DISEASE:
+  return {
+    ...state,
+    diseases: state.diseases.filter(d => d.id !== action.payload)
+  }
 
   }
 }
+
 
 export const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  //  preload from rules file
+   useEffect(() => {
+    dispatch({
+      type: ACTIONS.SET_DISEASES,
+      payload: [], 
+    })
+  }, [])
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
