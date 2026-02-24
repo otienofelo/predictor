@@ -11,7 +11,6 @@ const VisitHistory = () => {
   const [animalFilter, setAnimalFilter] = useState('all')
   const [dateFilter, setDateFilter] = useState('')
 
-  //  Filter logic for visits based on search, animal, and date
   const filteredVisits = visits.filter((visit) => {
     const animal = animals.find(a => a.id === visit.animalId)
     const animalName = animal?.tag || animal?.name || 'Unknown'
@@ -33,18 +32,18 @@ const VisitHistory = () => {
     return matchesSearch && matchesAnimal && matchesDate
   })
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleString()
-  }
+  const formatDate = (dateString) => new Date(dateString).toLocaleString()
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-6">Health Records</h1>
+    <div className="w-full max-w-6xl mx-auto mt-20 sm:mt-24 px-4 sm:px-6 lg:px-0">
+      <h1 className="text-2xl font-semibold mb-6 text-center sm:text-left">
+        Health Records
+      </h1>
 
       {/* Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 gap-4 mb-6">
         {/* Search */}
-        <div className="relative">
+        <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
             type="text"
@@ -59,7 +58,7 @@ const VisitHistory = () => {
         <select
           value={animalFilter}
           onChange={(e) => setAnimalFilter(e.target.value)}
-          className="border rounded-md px-3 py-2"
+          className="border rounded-md px-3 py-2 w-full sm:w-auto"
         >
           <option value="all">All Animals</option>
           {animals.map((animal) => (
@@ -70,7 +69,7 @@ const VisitHistory = () => {
         </select>
 
         {/* Date Filter */}
-        <div className="relative">
+        <div className="relative flex-1 sm:flex-none">
           <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
             type="date"
@@ -82,7 +81,7 @@ const VisitHistory = () => {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white rounded-lg shadow overflow-x-auto">
         {filteredVisits.length === 0 ? (
           <div className="text-center py-10 text-gray-500">
             No health records found.
@@ -91,19 +90,19 @@ const VisitHistory = () => {
           <table className="min-w-full divide-y">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium uppercase">
                   Date
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium uppercase">
                   Animal
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium uppercase">
                   Symptoms
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium uppercase">
                   Diagnosis
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium uppercase">
+                <th className="px-4 sm:px-6 py-3 text-right text-xs font-medium uppercase">
                   Action
                 </th>
               </tr>
@@ -111,32 +110,16 @@ const VisitHistory = () => {
 
             <tbody className="divide-y">
               {filteredVisits.map((visit) => {
-                const animal = animals.find(
-                  (a) => a.id === visit.animalId  
-                )
-
-                const primaryDisease =
-                  visit.diseases?.[0]?.name || 'Unknown'
+                const animal = animals.find(a => a.id === visit.animalId)
+                const primaryDisease = visit.diseases?.[0]?.name || 'Unknown'
 
                 return (
                   <tr key={visit.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 text-sm">
-                      {formatDate(visit.date)}
-                    </td>
-
-                    <td className="px-6 py-4 text-sm">
-                      {animal?.tag || animal?.name || 'Unknown'}
-                    </td>
-
-                    <td className="px-6 py-4 text-sm max-w-xs truncate">
-                      {visit.symptoms?.join(', ') || '—'}
-                    </td>
-
-                    <td className="px-6 py-4 text-sm">
-                      {primaryDisease}
-                    </td>
-
-                    <td className="px-6 py-4 text-right">
+                    <td className="px-4 sm:px-6 py-3 text-sm">{formatDate(visit.date)}</td>
+                    <td className="px-4 sm:px-6 py-3 text-sm">{animal?.tag || animal?.name || 'Unknown'}</td>
+                    <td className="px-4 sm:px-6 py-3 text-sm max-w-xs truncate">{visit.symptoms?.join(', ') || '—'}</td>
+                    <td className="px-4 sm:px-6 py-3 text-sm">{primaryDisease}</td>
+                    <td className="px-4 sm:px-6 py-3 text-right">
                       <Link
                         to={`/records/${visit.id}`}
                         className="text-blue-600 hover:text-blue-800"

@@ -27,17 +27,16 @@ const FarmerList = () => {
   return (
     <div>
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 mt-16 px-4 sm:px-6">
         <h1 className="text-2xl font-semibold text-gray-800">Farmers</h1>
         <Link
           to="/farmers/new"
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center"
+          className="mt-2 sm:mt-0 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center justify-center"
         >
           <Plus className="w-4 h-4 mr-2" />
           Add Farmer
         </Link>
       </div>
-
       {/* Search */}
       <div className="mb-4 relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />

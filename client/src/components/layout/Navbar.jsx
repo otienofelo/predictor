@@ -1,50 +1,49 @@
-import React from 'react'
-import { useUser, UserButton, useClerk } from '@clerk/clerk-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { Home, Menu } from "lucide-react";
 
-const Navbar = () => {
-  const { user } = useUser()
-  const { openSignIn } = useClerk()
+const Navbar = ({ onMenuClick }) => {
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    try {
+      await logout();
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.error("Error signing out:", err);
+    }
+  };
 
   return (
-    <div className="shadow py-4">
-      <div className="container px-4 2xl:px-20 mx-auto flex items-center justify-end">
-        
-        {user ? (
-          <div className="flex items-center space-x-4">
-            <Link 
-              to="/dashboard" 
-              className="text-gray-600 hover:text-blue-600"
-            >
-              Dashboard
-            </Link>
+    <nav className="bg-white border-b border-gray-200 px-4 py-2.5 fixed top-0 left-0 right-0 z-30 md:left-64 md:pl-0">
+      <div className="flex justify-between items-center">
+        {/* LEFT SIDE */}
+        <div className="flex items-center space-x-4">
+          {/* Hamburger menu for mobile */}
+          <button onClick={onMenuClick} className="md:hidden p-2">
+            <Menu className="h-6 w-6" />
+          </button>
 
-            <span className="text-gray-400">|</span>
+          {/* Home link */}
+          <Link to={currentUser ? "/dashboard" : "/"} className="flex items-center">
+            <Home className="h-5 w-5 mr-1" />
+            <span className="font-semibold">Home</span>
+          </Link>
+        </div>
 
-            <p className="text-gray-700">
-              Hi, {user.firstName} {user.lastName}
-            </p>
-
-            <UserButton />
-          </div>
-        ) : (
-          <div className="flex items-center space-x-4">
-            <button className="text-gray-600 hover:text-blue-600">
-              Farmer Login
-            </button>
-
-            <button
-              onClick={() => openSignIn()}
-              className="bg-blue-600 text-white px-6 sm:px-9 py-2 rounded-full hover:bg-blue-700"
-            >
-              Login
-            </button>
-          </div>
+        {/* RIGHT SIDE */}
+        {currentUser && (
+          <button
+            onClick={handleSignOut}
+            className="text-sm bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
+          >
+            Sign Out
+          </button>
         )}
-
       </div>
-    </div>
-  )
-}
+    </nav>
+  );
+};
 
-export default Navbar
+export default Navbar;

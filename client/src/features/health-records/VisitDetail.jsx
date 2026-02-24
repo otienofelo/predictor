@@ -82,7 +82,7 @@ const VisitDetail = () => {
   )
 }
 
-// Same mock data for fallback
+// mock data for fallback
 const mockVisits = [
   {
     id: '1',

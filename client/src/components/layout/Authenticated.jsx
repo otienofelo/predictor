@@ -3,18 +3,20 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
-const DashboardLayout = () => {
+const Authenticated = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-50">
       <Sidebar isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
-      <div className="flex flex-col flex-1">
+      <div className="flex-1 flex flex-col overflow-hidden">
         <Navbar onMenuClick={() => setMobileMenuOpen(true)} />
-        <main className="flex-1 p-6 overflow-y-auto mt-16 md:mt-0">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 mt-16 md:mt-0">
           <Outlet />
         </main>
       </div>
     </div>
   );
 };
+
+export default Authenticated;
