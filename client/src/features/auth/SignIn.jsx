@@ -7,16 +7,31 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth(); 
 
+  
+  const { login, googleSignIn } = useAuth();
+
+  // Email login
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
     try {
-      await login(email, password); 
+      await login(email, password);
       navigate('/dashboard', { replace: true });
     } catch (err) {
       setError(err.message);
+    }
+  };
+
+  // Google login
+  const handleGoogleLogin = async () => {
+    setError('');
+    try {
+      await googleSignIn();
+      navigate('/dashboard', { replace: true });
+    } catch (error) {
+      setError(error.message);
     }
   };
 
@@ -24,11 +39,13 @@ const SignIn = () => {
     <div
       className="min-h-screen flex items-center justify-center bg-gray-50 bg-cover bg-center px-4 sm:px-6 lg:px-8"
       style={{
-        backgroundImage: `url(https://images.unsplash.com/photo-1728665392221-d4525559b83f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fGxpdmVzdG9ja3xlbnwwfHwwfHx8MA%3D%3D)`,
+        backgroundImage: `url(https://images.unsplash.com/photo-1728665392221-d4525559b83f?w=600&auto=format&fit=crop&q=60)`,
       }}
     >
       <div className="w-full max-w-md bg-white bg-opacity-90 rounded-lg shadow-lg p-6 sm:p-8 backdrop-blur-sm">
-        <h2 className="text-2xl font-bold text-center mb-6">Login to Livestock DMS</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">
+          Login to Livestock DMS
+        </h2>
 
         {error && (
           <p className="text-red-500 text-sm mb-4 text-center">
@@ -38,24 +55,28 @@ const SignIn = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-1">Email</label>
+            <label className="block text-gray-700 text-sm font-medium mb-1">
+              Email
+            </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-1">Password</label>
+            <label className="block text-gray-700 text-sm font-medium mb-1">
+              Password
+            </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -66,6 +87,13 @@ const SignIn = () => {
             Sign In
           </button>
         </form>
+
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full mt-4 bg-gray-500 text-white py-2 rounded-md hover:bg-gray-600"
+        >
+          Continue with Google
+        </button>
 
         <p className="text-center mt-4 text-gray-600 text-sm">
           Don't have an account?{' '}
