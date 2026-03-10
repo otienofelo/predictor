@@ -18,7 +18,7 @@ const DueBadge = ({ date }) => {
   if (days < 0) return <span className="flex items-center gap-1 text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full"><AlertTriangle className="w-3 h-3" />Overdue</span>
   if (days === 0) return <span className="flex items-center gap-1 text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full"><Bell className="w-3 h-3" />Due today</span>
   if (days <= 7) return <span className="flex items-center gap-1 text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full"><Bell className="w-3 h-3" />Due in {days}d</span>
-  if (days <= 30) return <span className="flex items-center gap-1 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full"><Calendar className="w-3 h-3" />Due in {days}d</span>
+  if (days <= 30) return <span className="flex items-center gap-1 text-xs bg-green-100 text-blue-700 px-2 py-0.5 rounded-full"><Calendar className="w-3 h-3" />Due in {days}d</span>
   return <span className="flex items-center gap-1 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full"><CheckCircle className="w-3 h-3" />{new Date(date).toLocaleDateString()}</span>
 }
 
@@ -36,8 +36,8 @@ const VaccinationPage = () => {
   const isResearcher = role === 'researcher'
 
   // Researchers have no access
-  const canManage = isAdmin || isVet   // can add/edit/delete
-  const canView = isAdmin || isVet || isFarmer // farmer can only view
+  const canManage = isAdmin || isVet  
+  const canView = isAdmin || isVet || isFarmer 
 
   const [vaccinations, setVaccinations] = useState([])
   const [upcoming, setUpcoming] = useState([])
@@ -126,7 +126,7 @@ const VaccinationPage = () => {
     return true
   })
 
-  // ❌ Researcher — no access
+  // Researcher no access
   if (!roleLoading && isResearcher) {
     return (
       <div className="max-w-md mx-auto mt-32 px-4 text-center">
@@ -149,7 +149,7 @@ const VaccinationPage = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-            <Syringe className="w-6 h-6 text-blue-600" /> Vaccination Management
+            <Syringe className="w-6 h-6 text-green-600" /> Vaccination Management
           </h1>
           <div className="flex items-center gap-2 mt-1">
             <p className="text-sm text-gray-500">Track and schedule animal vaccinations</p>
@@ -165,7 +165,7 @@ const VaccinationPage = () => {
         {canManage ? (
           <button
             onClick={() => { setShowForm(true); setEditId(null); setForm(EMPTY_FORM) }}
-            className="flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors"
+            className="flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 text-sm font-medium transition-colors"
           >
             <Plus className="w-4 h-4" /> Add Vaccination
           </button>
@@ -186,14 +186,14 @@ const VaccinationPage = () => {
 
       {/* Upcoming reminders banner */}
       {upcoming.length > 0 && (
-        <div className="mb-6 bg-amber-50 border border-amber-200 rounded-xl p-4">
+        <div className="mb-6 bg-amber-50 border border-green-300 rounded-xl p-4">
           <div className="flex items-center gap-2 mb-3">
-            <Bell className="w-5 h-5 text-amber-600" />
-            <h2 className="font-semibold text-amber-800">Upcoming in 30 days ({upcoming.length})</h2>
+            <Bell className="w-5 h-5 text-gray-600" />
+            <h2 className="font-semibold text-gray-800">Upcoming in 30 days ({upcoming.length})</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {upcoming.map(v => (
-              <div key={v.id} className="bg-white rounded-lg px-3 py-2 flex items-center justify-between border border-amber-100">
+              <div key={v.id} className="bg-white rounded-lg px-3 py-2 flex items-center justify-between border border-green-100">
                 <div>
                   <p className="text-sm font-medium text-gray-800">{v.animal_tag} — {v.vaccine_name}</p>
                   <p className="text-xs text-gray-500 capitalize">{v.animal_species}</p>
@@ -212,7 +212,7 @@ const VaccinationPage = () => {
             key={f}
             onClick={() => setFilter(f)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors capitalize ${
-              filter === f ? 'bg-blue-600 text-white' : 'bg-white border border-gray-300 text-gray-600 hover:bg-gray-50'
+              filter === f ? 'bg-green-600 text-white' : 'bg-white border border-gray-300 text-gray-600 hover:bg-gray-50'
             }`}
           >
             {f}
@@ -243,8 +243,8 @@ const VaccinationPage = () => {
                 onClick={() => setExpandedId(prev => prev === v.id ? null : v.id)}
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Syringe className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Syringe className="w-5 h-5 text-green-600" />
                   </div>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -306,9 +306,9 @@ const VaccinationPage = () => {
         </div>
       )}
 
-      {/* Form Modal — only for admin and vet */}
+      {/*only for admin and vet */}
       {showForm && canManage && (
-        <div className="fixed inset-0 bg-gray-100 bg-opacity-40 z-50 flex items-end sm:items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-end sm:items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
               <h2 className="font-bold text-gray-800 text-lg">{editId ? 'Edit' : 'Add'} Vaccination</h2>
@@ -323,7 +323,7 @@ const VaccinationPage = () => {
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Animal *</label>
                 <select value={form.animalId} onChange={e => setForm(p => ({ ...p, animalId: e.target.value }))} required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
                   <option value="">Select animal</option>
                   {animals.map(a => <option key={a.id} value={a.id}>{a.tag} — {a.species}</option>)}
                 </select>
@@ -333,19 +333,19 @@ const VaccinationPage = () => {
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Vaccine Name *</label>
                 <input type="text" value={form.vaccineName} onChange={e => setForm(p => ({ ...p, vaccineName: e.target.value }))} required
                   placeholder="e.g. FMD Vaccine, Anthrax"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500" />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Date Administered *</label>
                   <input type="date" value={form.dateAdministered} onChange={e => setForm(p => ({ ...p, dateAdministered: e.target.value }))} required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Next Due Date</label>
                   <input type="date" value={form.nextDueDate} onChange={e => setForm(p => ({ ...p, nextDueDate: e.target.value }))}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500" />
                 </div>
               </div>
 
@@ -353,21 +353,21 @@ const VaccinationPage = () => {
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Vet Responsible</label>
                 <input type="text" value={form.vetResponsible} onChange={e => setForm(p => ({ ...p, vetResponsible: e.target.value }))}
                   placeholder="e.g. Dr. Kamau"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500" />
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Notes</label>
                 <textarea value={form.notes} onChange={e => setForm(p => ({ ...p, notes: e.target.value }))} rows={2}
                   placeholder="Any additional notes..."
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" />
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 resize-none" />
               </div>
 
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => { setShowForm(false); setEditId(null) }}
                   className="flex-1 border border-gray-300 text-gray-700 py-2 rounded-lg text-sm hover:bg-gray-50">Cancel</button>
                 <button type="submit" disabled={saving}
-                  className="flex-1 bg-blue-600 text-white py-2 rounded-lg text-sm hover:bg-blue-700 disabled:opacity-50">
+                  className="flex-1 bg-green-600 text-white py-2 rounded-lg text-sm hover:bg-green-700 disabled:opacity-50">
                   {saving ? 'Saving...' : editId ? 'Update' : 'Save'}
                 </button>
               </div>

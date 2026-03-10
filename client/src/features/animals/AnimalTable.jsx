@@ -15,7 +15,7 @@ const AnimalTable = () => {
 
   const farmers = state.farmers || []
 
-  // ✅ Fetch animals from backend on mount
+
   useEffect(() => {
     const fetchAnimals = async () => {
       setLoading(true)
@@ -44,7 +44,7 @@ const AnimalTable = () => {
     return matchesSearch && matchesSpecies && matchesStatus
   })
 
-  // ✅ Delete via API
+  // Delete via API
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this animal?')) {
       try {
@@ -57,7 +57,7 @@ const AnimalTable = () => {
     }
   }
 
-  // ✅ Match farmer by id — backend returns farmer_id (integer)
+  // Match farmer by id — backend returns farmer_id
   const getFarmerName = (farmerId) => {
     const farmer = farmers.find(f => f.id === farmerId || f.id === parseInt(farmerId))
     return farmer?.name || 'Unknown'
@@ -70,7 +70,7 @@ const AnimalTable = () => {
         <h1 className="text-2xl font-semibold text-gray-800">Animals</h1>
         <Link
           to="/animals/new"
-          className="mt-2 sm:mt-0 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center justify-center"
+          className="mt-2 sm:mt-0 bg-black-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center justify-center"
         >
           <Plus className="w-4 h-4 mr-2" />
           Add Animal

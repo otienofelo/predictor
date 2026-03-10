@@ -10,7 +10,6 @@ import {
   X,
   Syringe,
   UtensilsCrossed,
-  
 } from "lucide-react";
 import { useRole } from "../../hooks/useRole";
 
@@ -36,7 +35,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
   return (
     <>
-      {/* Mobile overlay */}
+      {/* Mobile overlay - z-40, below sidebar */}
       <div
         className={`fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden transition-opacity duration-300 ${
           isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
@@ -44,21 +43,21 @@ const Sidebar = ({ isOpen, onClose }) => {
         onClick={onClose}
       />
 
-      {/* Sidebar */}
+      {/* Sidebar - z-50 on mobile, sticky on desktop so modals don't cover it */}
       <aside
         className={`
           fixed inset-y-0 left-0 z-50
-          w-64 bg-white border-r border-gray-200
+          w-64 bg-green-600 border-r border-green-100
           flex flex-col
           transform transition-transform duration-300 ease-in-out
-          ${isOpen ? "translate-x-0 shadow-xl" : "-translate-x-full"}
-          md:translate-x-0 md:static md:shadow-none md:flex-shrink-0
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+          md:translate-x-0 md:sticky md:top-0 md:h-screen md:z-30 md:flex-shrink-0
         `}
       >
         {/* Header */}
         <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 flex-shrink-0">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 bg-gray-600 rounded-lg flex items-center justify-center flex-shrink-0">
               <PawPrint className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-base font-bold text-gray-800 truncate">Livestock DMS</h1>

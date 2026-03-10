@@ -127,7 +127,7 @@ const DiseaseForm = () => {
               onChange={handleChange}
               required
               placeholder="e.g. Foot and Mouth Disease"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
@@ -138,7 +138,7 @@ const DiseaseForm = () => {
               name="species"
               value={formData.species}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="cow">Cow</option>
               <option value="goat">Goat</option>
@@ -147,7 +147,7 @@ const DiseaseForm = () => {
             </select>
           </div>
 
-          {/* Symptoms — Tag Input */}
+          {/* Symptoms Tag Input */}
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Symptoms
@@ -166,7 +166,7 @@ const DiseaseForm = () => {
                     <button
                       type="button"
                       onClick={() => removeSymptom(symptom)}
-                      className="hover:text-orange-900"
+                      className="hover:text-green-900"
                     >
                       <X className="w-3 h-3" />
                     </button>
@@ -183,12 +183,12 @@ const DiseaseForm = () => {
                 onChange={(e) => setSymptomInput(e.target.value)}
                 onKeyDown={handleSymptomKeyDown}
                 placeholder="e.g. fever"
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               />
               <button
                 type="button"
                 onClick={addSymptom}
-                className="px-3 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 flex items-center gap-1 text-sm"
+                className="px-3 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 flex items-center gap-1 text-sm"
               >
                 <Plus className="w-4 h-4" /> Add
               </button>
@@ -207,7 +207,7 @@ const DiseaseForm = () => {
               onChange={handleChange}
               rows="3"
               placeholder="e.g. Vaccinate annually, quarantine new animals..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
@@ -220,7 +220,7 @@ const DiseaseForm = () => {
               onChange={handleChange}
               rows="3"
               placeholder="e.g. Antibiotics, supportive care..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
@@ -236,7 +236,7 @@ const DiseaseForm = () => {
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 text-sm w-full sm:w-auto"
+              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 text-sm w-full sm:w-auto"
             >
               {loading ? 'Saving...' : `${id ? 'Update' : 'Save'} Disease`}
             </button>

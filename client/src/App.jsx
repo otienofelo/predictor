@@ -16,7 +16,6 @@ import FarmerList from './features/farmers/FarmerList';
 import FarmerDetail from './features/farmers/FarmerDetail';
 import FarmerRegistration from './features/farmers/FarmerRegistration';
 import AnimalTable from './features/animals/AnimalTable';
-import AnimalDetail from './features/animals/AnimalDetail';
 import AnimalForm from './features/animals/AnimalForm';
 import SymptomChecker from './features/diagnosis/SymptomChecker';
 import VisitHistory from './features/health-records/VisitHistory';
@@ -26,28 +25,17 @@ import DiseaseForm from './features/disease-library/DiseaseForm';
 import RoleProtectedRoute from './routes/RoleProtectedRoute';
 import AdminUserManager from './features/admin/AdminUserManager';
 import VaccinationPage from './features/Vaccinations/VaccinationPage';
-import FeedingPage from './features/feeding/FeedingPage'
+import FeedingPage from './features/feeding/FeedingPage';
 
 function App() {
   return (
-
     <Routes>
       {/* Public routes */}
       <Route path="/" element={<Landing />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
 
-      {/* Protected routes with Authenticated layout */}
-
-      <Route path="vaccinations" element={<VaccinationPage />} />
-      <Route path="feeding" element={<FeedingPage />} />
-
-      <Route path="admin/users" element={
-        <RoleProtectedRoute allowedRoles={['admin']}>
-          <AdminUserManager />
-        </RoleProtectedRoute>
-      } />
-
+      {/* All protected routes inside Authenticated layout */}
       <Route
         element={
           <ProtectedRoute>
@@ -67,7 +55,6 @@ function App() {
         <Route path="animals">
           <Route index element={<AnimalTable />} />
           <Route path="new" element={<AnimalForm />} />
-          <Route path=":animalId" element={<AnimalDetail />} />
           <Route path=":animalId/edit" element={<AnimalForm />} />
         </Route>
 
@@ -83,12 +70,23 @@ function App() {
           <Route path="new" element={<DiseaseForm />} />
           <Route path=":id/edit" element={<DiseaseForm />} />
         </Route>
+
+        <Route path="vaccinations" element={<VaccinationPage />} />
+        <Route path="feeding" element={<FeedingPage />} />
+
+        <Route
+          path="admin/users"
+          element={
+            <RoleProtectedRoute allowedRoles={['admin']}>
+              <AdminUserManager />
+            </RoleProtectedRoute>
+          }
+        />
       </Route>
 
       {/* Redirect unknown routes */}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
-
   );
 }
 

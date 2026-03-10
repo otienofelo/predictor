@@ -89,7 +89,7 @@ const DiseaseList = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
         <div>
           <h1 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
-            <Shield className="w-6 h-6 text-blue-600" />
+            <Shield className="w-6 h-6 text-green-600" />
             Disease Library
           </h1>
           <div className="flex items-center gap-2 mt-1">
@@ -110,7 +110,7 @@ const DiseaseList = () => {
         {(isAdmin || isVet || isResearcher) ? (
           <Link
             to="/diseases/new"
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center justify-center gap-2 text-sm"
+            className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 flex items-center justify-center gap-2 text-sm"
           >
             <Plus className="w-4 h-4" />
             {isResearcher ? 'Submit Disease' : 'Add Disease'}
@@ -141,7 +141,7 @@ const DiseaseList = () => {
               key={species}
               onClick={() => setSpeciesFilter(prev => prev === species ? 'all' : species)}
               className={`p-3 rounded-lg border-2 text-left transition-all ${
-                speciesFilter === species ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white hover:border-blue-300'
+                speciesFilter === species ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white hover:border-green-300'
               }`}
             >
               <p className="text-xs text-gray-500 capitalize">{species}</p>
@@ -161,7 +161,7 @@ const DiseaseList = () => {
             placeholder="Search by disease name or symptom..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
         </div>
         <select
