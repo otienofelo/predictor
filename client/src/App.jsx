@@ -6,7 +6,7 @@ import ProtectedRoute from './routes/PrivateRoute';
 import Authenticated from './components/layout/Authenticated';
 
 // Public pages
-import Landing from './features/landing/Landing';
+import Landing from './features/Landing/Landing';
 import SignIn from './features/auth/SignIn';
 import SignUp from './features/auth/SignUp';
 
@@ -21,60 +21,74 @@ import AnimalForm from './features/animals/AnimalForm';
 import SymptomChecker from './features/diagnosis/SymptomChecker';
 import VisitHistory from './features/health-records/VisitHistory';
 import VisitDetail from './features/health-records/VisitDetail';
-import DiseaseList from './features/disease-library/DiseaseList';
+import DiseaseList from './features/disease-library/DiseaseList_RBAC';
 import DiseaseForm from './features/disease-library/DiseaseForm';
+import RoleProtectedRoute from './routes/RoleProtectedRoute';
+import AdminUserManager from './features/admin/AdminUserManager';
+import VaccinationPage from './features/Vaccinations/VaccinationPage';
+import FeedingPage from './features/feeding/FeedingPage'
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<Landing />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
 
-        {/* Protected routes with Authenticated layout */}
-        <Route
-          element={
-            <ProtectedRoute>
-              <Authenticated />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="dashboard" element={<Dashboard />} />
+    <Routes>
+      {/* Public routes */}
+      <Route path="/" element={<Landing />} />
+      <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/sign-up" element={<SignUp />} />
 
-          <Route path="farmers">
-            <Route index element={<FarmerList />} />
-            <Route path="new" element={<FarmerRegistration />} />
-            <Route path=":farmerId" element={<FarmerDetail />} />
-            <Route path=":farmerId/edit" element={<FarmerRegistration />} />
-          </Route>
+      {/* Protected routes with Authenticated layout */}
 
-          <Route path="animals">
-            <Route index element={<AnimalTable />} />
-            <Route path="new" element={<AnimalForm />} />
-            <Route path=":animalId" element={<AnimalDetail />} />
-            <Route path=":animalId/edit" element={<AnimalForm />} />
-          </Route>
+      <Route path="vaccinations" element={<VaccinationPage />} />
+      <Route path="feeding" element={<FeedingPage />} />
 
-          <Route path="diagnosis" element={<SymptomChecker />} />
+      <Route path="admin/users" element={
+        <RoleProtectedRoute allowedRoles={['admin']}>
+          <AdminUserManager />
+        </RoleProtectedRoute>
+      } />
 
-          <Route path="records">
-            <Route index element={<VisitHistory />} />
-            <Route path=":id" element={<VisitDetail />} />
-          </Route>
+      <Route
+        element={
+          <ProtectedRoute>
+            <Authenticated />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="dashboard" element={<Dashboard />} />
 
-          <Route path="diseases">
-            <Route index element={<DiseaseList />} />
-            <Route path="new" element={<DiseaseForm />} />
-            <Route path=":id/edit" element={<DiseaseForm />} />
-          </Route>
+        <Route path="farmers">
+          <Route index element={<FarmerList />} />
+          <Route path="new" element={<FarmerRegistration />} />
+          <Route path=":farmerId" element={<FarmerDetail />} />
+          <Route path=":farmerId/edit" element={<FarmerRegistration />} />
         </Route>
 
-        {/* Redirect unknown routes */}
-        <Route path="*" element={<Navigate to="/"/>} />
-      </Routes>
-    </AuthProvider>
+        <Route path="animals">
+          <Route index element={<AnimalTable />} />
+          <Route path="new" element={<AnimalForm />} />
+          <Route path=":animalId" element={<AnimalDetail />} />
+          <Route path=":animalId/edit" element={<AnimalForm />} />
+        </Route>
+
+        <Route path="diagnosis" element={<SymptomChecker />} />
+
+        <Route path="records">
+          <Route index element={<VisitHistory />} />
+          <Route path=":id" element={<VisitDetail />} />
+        </Route>
+
+        <Route path="diseases">
+          <Route index element={<DiseaseList />} />
+          <Route path="new" element={<DiseaseForm />} />
+          <Route path=":id/edit" element={<DiseaseForm />} />
+        </Route>
+      </Route>
+
+      {/* Redirect unknown routes */}
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
+
   );
 }
 

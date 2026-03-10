@@ -1,22 +1,48 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAppContext } from '../../context/AppContext'
+import { useAppContext, ACTIONS } from '../../context/AppContext'
+import { getAnimals } from '../../services/animals'
+import { getDiseases } from '../../services/diseases'
 import { runDiagnosis } from '../../utils/runDiagnosis'
 import PredictionResult from './PredictionResult'
 
 const SymptomChecker = () => {
-  const { state } = useAppContext()
+  const { state, dispatch } = useAppContext()
   const navigate = useNavigate()
 
   const [selectedAnimalId, setSelectedAnimalId] = useState('')
   const [selectedSymptoms, setSelectedSymptoms] = useState([])
   const [prediction, setPrediction] = useState(null)
   const [step, setStep] = useState(1)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
-  const selectedAnimal = state.animals.find(a => a.id === selectedAnimalId)
+  // Fetch animals and diseases from backend on mount
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      setError('')
+      try {
+        const [animals, diseases] = await Promise.all([
+          getAnimals(),
+          getDiseases()
+        ])
+        dispatch({ type: ACTIONS.SET_ANIMALS, payload: animals })
+        dispatch({ type: ACTIONS.SET_DISEASES, payload: diseases })
+      } catch (err) {
+        console.error('Failed to load data:', err)
+        setError('Failed to load animals or diseases. Please refresh.')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [dispatch])
+
+  const selectedAnimal = state.animals?.find(a => a.id === selectedAnimalId || a.id === parseInt(selectedAnimalId))
   const species = selectedAnimal?.species
 
-  const diseases = state.diseases.filter(d => d.species === species)
+  const diseases = (state.diseases || []).filter(d => d.species === species)
   const availableSymptoms = diseases.length > 0
     ? [...new Set(diseases.flatMap(d => d.symptoms))]
     : []
@@ -36,13 +62,19 @@ const SymptomChecker = () => {
     )
   }
 
-  const handlePredict = () => {
-    if (!selectedAnimal || selectedSymptoms.length === 0) return
-    const results = runDiagnosis(diseases, selectedSymptoms)
-    console.log('Results:', results)
-    setPrediction(results)
+const handlePredict = () => {
+  if (!selectedAnimal || selectedSymptoms.length === 0) return
+  const results = runDiagnosis(diseases, selectedSymptoms)
+  setPrediction(results)
+
+  if (results.length === 0) {
+    alert('No matching diseases found. Try selecting different symptoms.')
+  } else {
     setStep(3)
   }
+}
+
+  
 
   const handleNewDiagnosis = () => {
     setStep(1)
@@ -51,9 +83,8 @@ const SymptomChecker = () => {
     setPrediction(null)
   }
 
-  const handleSaveVisit = () => {
-    navigate('/records')
-  }
+  const animals = state.animals || []
+  const farmers = state.farmers || []
 
   return (
     <div className="w-full max-w-4xl mx-auto mt-20 sm:mt-24 px-4 sm:px-10 lg:px-0">
@@ -62,8 +93,11 @@ const SymptomChecker = () => {
           Symptom Checker
         </h1>
 
-        {/* Step 1: Select Animal */}
-        {step === 1 && (
+        {loading && <div className="text-center py-8 text-gray-500">Loading...</div>}
+        {error && <div className="text-center py-4 text-red-500">{error}</div>}
+
+        {/* Step 1 */}
+        {!loading && step === 1 && (
           <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 mb-4">
             <label className="block text-gray-700 font-medium mb-2 sm:mb-0 sm:w-1/3">
               Select Animal
@@ -74,39 +108,44 @@ const SymptomChecker = () => {
               className="w-full sm:w-2/3 border border-gray-300 rounded-md px-4 py-2"
             >
               <option value="">-- Choose an animal --</option>
-              {state.animals.map(a => (
+              {animals.map(a => (
                 <option key={a.id} value={a.id}>
-                  {a.tag} - {a.species} (Owner: {state.farmers.find(f => f.id === a.farmerId)?.name})
+                  {a.tag} - {a.species} (Owner: {farmers.find(f => f.id === a.farmer_id)?.name || 'Unknown'})
                 </option>
               ))}
             </select>
-            {state.animals.length === 0 && (
-              <p className="text-red-500 mt-2 text-sm sm:mt-0">
+            {animals.length === 0 && !loading && (
+              <p className="text-red-500 mt-2 text-sm">
                 No animals registered. Please add animals first.
               </p>
             )}
           </div>
         )}
 
-        {/* Step 2: Select Symptoms */}
-        {step === 2 && selectedAnimal && (
+        {/* Step 2*/}
+        {!loading && step === 2 && selectedAnimal && (
           <div>
             <h2 className="text-xl font-semibold mb-4">
               Select symptoms for {selectedAnimal.tag} ({selectedAnimal.species})
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-6">
-              {availableSymptoms.map(symptom => (
-                <label key={symptom} className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    checked={selectedSymptoms.includes(symptom)}
-                    onChange={() => handleSymptomToggle(symptom)}
-                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <span className="capitalize">{symptom}</span>
-                </label>
-              ))}
-            </div>
+
+            {availableSymptoms.length === 0 ? (
+              <p className="text-gray-500 mb-4">No known diseases for this species yet.</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+                {availableSymptoms.map(symptom => (
+                  <label key={symptom} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={selectedSymptoms.includes(symptom)}
+                      onChange={() => handleSymptomToggle(symptom)}
+                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="capitalize">{symptom}</span>
+                  </label>
+                ))}
+              </div>
+            )}
 
             <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4">
               <button
@@ -126,22 +165,15 @@ const SymptomChecker = () => {
           </div>
         )}
 
-        {/* Step 3: Prediction Results */}
+        {/* Step 3*/}
         {step === 3 && prediction && prediction.length > 0 && (
           <PredictionResult
             results={prediction}
             animal={selectedAnimal}
             onNew={handleNewDiagnosis}
-            onSave={handleSaveVisit}
           />
         )}
-
-        {step === 3 && prediction && prediction.length === 0 && (
-          <p className="text-center text-gray-500 mt-4">
-            No matching diseases found for the selected symptoms.
-          </p>
-        )}
-      </div>
+       </div>
     </div>
   )
 }

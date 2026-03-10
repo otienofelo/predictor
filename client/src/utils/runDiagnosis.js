@@ -1,4 +1,3 @@
-// frontend/src/utils/runDiagnosis.js
 export const runDiagnosis = (diseases, selectedSymptoms) => {
   if (!diseases || diseases.length === 0) return []
 
