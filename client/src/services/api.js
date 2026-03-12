@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { auth } from '../firebase';
 
+
 // Waits for Firebase to restore auth state before resolving
 const waitForAuth = () => {
   return new Promise((resolve) => {

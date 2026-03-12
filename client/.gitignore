@@ -1,5 +1,8 @@
 #variable
+
 .env
+config/serviceAccountKey.json
+node_modules
 # Logs
 logs
 *.log
