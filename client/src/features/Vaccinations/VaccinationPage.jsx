@@ -15,11 +15,16 @@ const getDaysUntil = (dateStr) => {
 const DueBadge = ({ date }) => {
   const days = getDaysUntil(date)
   if (days === null) return null
-  if (days < 0) return <span className="flex items-center gap-1 text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full"><AlertTriangle className="w-3 h-3" />Overdue</span>
-  if (days === 0) return <span className="flex items-center gap-1 text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full"><Bell className="w-3 h-3" />Due today</span>
-  if (days <= 7) return <span className="flex items-center gap-1 text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full"><Bell className="w-3 h-3" />Due in {days}d</span>
-  if (days <= 30) return <span className="flex items-center gap-1 text-xs bg-green-100 text-blue-700 px-2 py-0.5 rounded-full"><Calendar className="w-3 h-3" />Due in {days}d</span>
-  return <span className="flex items-center gap-1 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full"><CheckCircle className="w-3 h-3" />{new Date(date).toLocaleDateString()}</span>
+  if (days < 0) return <span className="flex items-center gap-1 text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">
+    <AlertTriangle className="w-3 h-3" />Overdue</span>
+  if (days === 0) return <span className="flex items-center gap-1 text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">
+    <Bell className="w-3 h-3" />Due today</span>
+  if (days <= 7) return <span className="flex items-center gap-1 text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">
+    <Bell className="w-3 h-3" />Due in {days}d</span>
+  if (days <= 30) return <span className="flex items-center gap-1 text-xs bg-green-100 text-blue-700 px-2 py-0.5 rounded-full">
+    <Calendar className="w-3 h-3" />Due in {days}d</span>
+  return <span className="flex items-center gap-1 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+    <CheckCircle className="w-3 h-3" />{new Date(date).toLocaleDateString()}</span>
 }
 
 const ROLE_COLORS = {

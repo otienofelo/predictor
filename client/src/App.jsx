@@ -6,7 +6,7 @@ import ProtectedRoute from './routes/PrivateRoute';
 import Authenticated from './components/layout/Authenticated';
 
 // Public pages
-import Landing from './features/Landing/Landing';
+import Landing from "./features/landing/Landing";
 import SignIn from './features/auth/SignIn';
 import SignUp from './features/auth/SignUp';
 
