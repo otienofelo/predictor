@@ -16,6 +16,7 @@ import FarmerList from './features/farmers/FarmerList';
 import FarmerDetail from './features/farmers/FarmerDetail';
 import FarmerRegistration from './features/farmers/FarmerRegistration';
 import AnimalTable from './features/animals/AnimalTable';
+import AnimalDetail from './features/animals/AnimalDetail';
 import AnimalForm from './features/animals/AnimalForm';
 import SymptomChecker from './features/diagnosis/SymptomChecker';
 import VisitHistory from './features/health-records/VisitHistory';
@@ -54,7 +55,7 @@ function App() {
         <Route path="animals">
           <Route index element={<AnimalTable />} />
           <Route path="new" element={<AnimalForm />} />
-          <Route path=":animalId" element={<AnimalDetail />} />  {/* ← ADD THIS */}
+          <Route path=":animalId" element={<AnimalDetail />} /> 
           <Route path=":animalId/edit" element={<AnimalForm />} />
         </Route>
 
