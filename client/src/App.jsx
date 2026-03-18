@@ -51,10 +51,10 @@ function App() {
           <Route path=":farmerId" element={<FarmerDetail />} />
           <Route path=":farmerId/edit" element={<FarmerRegistration />} />
         </Route>
-
         <Route path="animals">
           <Route index element={<AnimalTable />} />
           <Route path="new" element={<AnimalForm />} />
+          <Route path=":animalId" element={<AnimalDetail />} />  {/* ← ADD THIS */}
           <Route path=":animalId/edit" element={<AnimalForm />} />
         </Route>
 
