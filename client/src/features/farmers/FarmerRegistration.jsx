@@ -45,10 +45,11 @@ const FarmerRegistration = () => {
 
     try {
       if (id) {
-        
+        //Update via API
         const updated = await updateFarmer(id, formData)
         dispatch({ type: ACTIONS.UPDATE_FARMER, payload: updated })
       } else {
+        //Create via API
         const newFarmer = await createFarmer(formData)
         dispatch({ type: ACTIONS.ADD_FARMER, payload: newFarmer })
       }
