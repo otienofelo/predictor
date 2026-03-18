@@ -1,15 +1,12 @@
 import axios from 'axios';
 import { auth } from '../firebase';
 
-
 // Waits for Firebase to restore auth state before resolving
 const waitForAuth = () => {
   return new Promise((resolve) => {
-    // If user is already loaded, resolve immediately
     if (auth.currentUser !== null) {
       return resolve(auth.currentUser);
     }
-    // Otherwise wait for Firebase to finish initializing
     const unsubscribe = auth.onAuthStateChanged((user) => {
       unsubscribe();
       resolve(user);
@@ -22,20 +19,14 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(async (config) => {
-  const user = await waitForAuth(); 
-  console.log('Current user:', user);
-
+  const user = await waitForAuth();
   if (user) {
     const token = await user.getIdToken();
-    console.log('Token retrieved successfully');
     config.headers.Authorization = `Bearer ${token}`;
-  } else {
-    console.warn('No logged-in user found — request will be unauthenticated');
   }
   return config;
 });
 
-// Response interceptor to handle common errors
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
