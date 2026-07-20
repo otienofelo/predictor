@@ -61,7 +61,7 @@ const AnimalTable = () => {
   }
 
   const SPECIES_EMOJI = {
-    cow: '🐄', goat: '🐐', sheep: '🐑', chicken: '🐔'
+    cow: '', goat: '', sheep: '', chicken: ''
   }
 
   return (
@@ -102,10 +102,10 @@ const AnimalTable = () => {
           className="border border-gray-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
         >
           <option value="all">All Species</option>
-          <option value="cow">🐄 Cow</option>
-          <option value="goat">🐐 Goat</option>
-          <option value="sheep">🐑 Sheep</option>
-          <option value="chicken">🐔 Chicken</option>
+          <option value="cow"> Cow</option>
+          <option value="goat"> Goat</option>
+          <option value="sheep"> Sheep</option>
+          <option value="chicken"> Chicken</option>
         </select>
         <select
           value={statusFilter}
@@ -154,7 +154,7 @@ const AnimalTable = () => {
                   <tr key={animal.id} className="hover:bg-green-50 transition-colors">
                     <td className="px-6 py-4 text-sm font-semibold text-gray-900">
                       <div className="flex items-center gap-2">
-                        <span>{SPECIES_EMOJI[animal.species] || '🐾'}</span>
+                        <span>{SPECIES_EMOJI[animal.species] || ''}</span>
                         {animal.tag}
                       </div>
                     </td>

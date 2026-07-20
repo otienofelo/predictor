@@ -7,7 +7,6 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup
-  
 } from 'firebase/auth';
 
 const AuthContext = createContext();

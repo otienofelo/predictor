@@ -138,10 +138,10 @@ const AnimalForm = () => {
                 onChange={handleChange}
                 className="w-full px-3 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               >
-                <option value="cow">🐄 Cow</option>
-                <option value="goat">🐐 Goat</option>
-                <option value="sheep">🐑 Sheep</option>
-                <option value="chicken">🐔 Chicken</option>
+                <option value="cow"> Cow</option>
+                <option value="goat"> Goat</option>
+                <option value="sheep"> Sheep</option>
+                <option value="chicken"> Chicken</option>
               </select>
             </div>
             <div>

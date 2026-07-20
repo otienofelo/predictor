@@ -1,4 +1,3 @@
-//Admin parnel to manage user roles
 import { useState, useEffect } from 'react'
 import { useRole } from '../../hooks/useRole'
 import { Shield, User, ChevronDown } from 'lucide-react'

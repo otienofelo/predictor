@@ -127,10 +127,10 @@ const AnimalDetail = () => {
         <div className="flex items-start justify-between flex-wrap gap-4">
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-3xl">
-              {animal.species === 'cow' ? '🐄' :
-                animal.species === 'goat' ? '🐐' :
-                  animal.species === 'sheep' ? '🐑' :
-                    animal.species === 'chicken' ? '🐔' : '🐾'}
+              {animal.species === 'cow' ? '' :
+                animal.species === 'goat' ? '' :
+                  animal.species === 'sheep' ? '' :
+                    animal.species === 'chicken' ? '' : ''}
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">

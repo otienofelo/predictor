@@ -29,7 +29,6 @@ const Navbar = ({ onMenuClick }) => {
     <nav className="bg-white border-b border-gray-200 px-3 sm:px-4 py-2.5 fixed top-0 left-0 right-0 z-30 md:left-64">
       <div className="flex justify-between items-center h-11">
 
-        {/* LEFT — hamburger + home */}
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={onMenuClick}
@@ -48,7 +47,6 @@ const Navbar = ({ onMenuClick }) => {
           </Link>
         </div>
 
-        {/* RIGHT — user info + sign out */}
         {currentUser && (
           <div className="flex items-center gap-2 sm:gap-3">
 
@@ -59,7 +57,7 @@ const Navbar = ({ onMenuClick }) => {
               </span>
             )}
 
-            {/* User dropdown */}
+          
             <div className="relative">
               <button
                 onClick={() => setDropdownOpen(prev => !prev)}
@@ -68,14 +66,13 @@ const Navbar = ({ onMenuClick }) => {
                 <div className="w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
                   <User className="w-4 h-4 text-white" />
                 </div>
-                {/* Email — truncated on small screens */}
+
                 <span className="hidden sm:block max-w-[140px] truncate text-sm text-gray-600">
                   {currentUser.email}
                 </span>
                 <ChevronDown className="w-3.5 h-3.5 text-gray-400 hidden sm:block" />
               </button>
 
-              {/* Dropdown menu */}
               {dropdownOpen && (
                 <>
                   {/* Click outside to close */}

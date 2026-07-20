@@ -27,7 +27,7 @@ const RecentVisits = ({ visits = [], animals = [] }) => {
       ) : (
         <div className="divide-y divide-gray-100">
           {visits.map((visit) => {
-            // ✅ backend returns animal_id, also fallback to animalId for local state
+            //returns animal_id, also fallback to animalId for local state
             const animal = animals.find(a =>
               a.id === visit.animal_id || a.id === visit.animalId
             )
